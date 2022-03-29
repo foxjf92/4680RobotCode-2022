@@ -33,19 +33,6 @@ public class ManualShooterSpeed extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //Checks on initilization instead of continuously?
-    //int pov = RobotContainer.shooterController.getPOV();
-    
-    // if(pov == 0) {
-    //   rpmSetpoint += INCREMENT;
-    // } else if(pov == 180) {
-    //   rpmSetpoint = ZERO_SPEED;
-    // } else if(pov == 90) {
-    //   rpmSetpoint = NEAR_SETPOINT;
-    // } else if(pov == 270) {
-    //   rpmSetpoint = FAR_SETPOINT;
-    // }
-  //  rpmSetpoint = 0.0; //I think commenting this will let shooter speed persist 
   }
 
   // Called every time the scheduler runs while the command is scheduled.

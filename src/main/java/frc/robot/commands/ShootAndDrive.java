@@ -19,25 +19,16 @@ public class ShootAndDrive extends SequentialCommandGroup {
   //private final DriveTrain m_driveTrain;
   private final Shooter m_shooter;
   private final Feeder m_feeder;
+  private final SwerveDrive m_swerveDrive;
   
   public ShootAndDrive(SwerveDrive swerveDrive, Feeder feeder, Shooter shooter) {
-    //m_driveTrain = driveTrain;
+    m_swerveDrive = swerveDrive;
     m_shooter = shooter;
     m_feeder = feeder;
     
     addCommands(new SetShooterSpeed(m_shooter, ManualShooterSpeed.NEAR_SETPOINT));
-    //addSequential(new DriveXY(100, 0, 0, 0.5));
-    //addSequential(new DriveXY(120, 0, 0, 0.2));
-    //addSequential(new SetShooterSpeed(ManualShooterCommand.FAR_SETPOINT));
-    //addSequential(new LoadBall());
-    //addSequential(new ShootBall());
-    //addSequential(new SetShooterSpeed(ManualShooterCommand.FAR_SETPOINT));
-    //addSequential(new LoadBall());
-    //addSequential(new ShootBall());
-    //addSequential(new SetShooterSpeed(ManualShooterCommand.FAR_SETPOINT));
-    //addSequential(new LoadBall());
     addCommands(new ShootBall(m_feeder));
-    addCommands(new DriveXY(100, 0, 0, 0.5));
-    //addSequential(new DriveXY(100, 50, 0, 0.3));
+    addCommands(new SetShooterSpeed(m_shooter, 0.0));
+    addCommands(new AutoSwerveJoystickCmd(m_swerveDrive, 0.5, 0.0, 0.0, false).withTimeout(5));
   }
 }

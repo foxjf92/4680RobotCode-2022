@@ -113,7 +113,6 @@ public class SwerveDrive extends SubsystemBase {
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
 
-        SmartDashboard.putNumber("Gyroscope Angle", getAngle());  
         SmartDashboard.putBoolean("Field Oriented", !RobotContainer.driveController.getRawButton(6));
 
     }
@@ -134,48 +133,48 @@ public class SwerveDrive extends SubsystemBase {
     }
 
 
-    //Below is taken from Old Code to get auton working hopefully
-    public void driveHeading(Translation2d translation, double heading) {
+    // //Below is taken from Old Code to get auton working hopefully
+    // public void driveHeading(Translation2d translation, double heading) {
 
-        double angle = getAngle();
-        double currentAngularRate = getAngularRate();
-        double angle_error = angleDelta(heading, angle);
-        double yawCommand = -angle_error * kPgain - (currentAngularRate) * kDgain;
+    //     double angle = getAngle();
+    //     double currentAngularRate = getAngularRate();
+    //     double angle_error = angleDelta(heading, angle);
+    //     double yawCommand = -angle_error * kPgain - (currentAngularRate) * kDgain;
 
-        drive(translation, yawCommand, true);
-    }
+    //     drive(translation, yawCommand, true);
+    // }
 
-    static public double angleDelta(double src, double dest) {
-        double delta = (dest - src) % 360.0;
-        if (Math.abs(delta) > 180) {
-            delta = delta - (Math.signum(delta) * 360);
-        }
-        return delta;
-    }
+    // static public double angleDelta(double src, double dest) {
+    //     double delta = (dest - src) % 360.0;
+    //     if (Math.abs(delta) > 180) {
+    //         delta = delta - (Math.signum(delta) * 360);
+    //     }
+    //     return delta;
+    // }
 
-    public double getAngle() {
-        return -gyro.getAngle();
-    }
+    // public double getAngle() {
+    //     return -gyro.getAngle();
+    // }
 
-    public double getAngularRate() {
-        return -gyro.getRate();
-    }
+    // public double getAngularRate() {
+    //     return -gyro.getRate();
+    // }
 
-    public void drive(Translation2d translation, double rotation, boolean fieldOriented) {
-        rotation *= 2.0 / Math.hypot(Constants.DriveConstants.kWheelBase, Constants.DriveConstants.kTrackWidth);
-        ChassisSpeeds speeds;
-        if (fieldOriented) {
-            speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
-                    Rotation2d.fromDegrees(getAngle()));
-        } else {
-            speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
-        }
-        // setModuleStates(SwerveModuleState[] speeds);
-        //FIXME Need to sort out to drive in Auton I think
-        SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
-        frontLeft.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
-        frontRight.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
-        backLeft.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
-        backRight.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
-    }
+    // public void drive(Translation2d translation, double rotation, boolean fieldOriented) {
+    //     rotation *= 2.0 / Math.hypot(Constants.DriveConstants.kWheelBase, Constants.DriveConstants.kTrackWidth);
+    //     ChassisSpeeds speeds;
+    //     if (fieldOriented) {
+    //         speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
+    //                 Rotation2d.fromDegrees(getAngle()));
+    //     } else {
+    //         speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
+    //     }
+    //     // setModuleStates(SwerveModuleState[] speeds);
+    //     //FIXME Need to sort out to drive in Auton I think
+    //     SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
+    //     frontLeft.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
+    //     frontRight.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
+    //     backLeft.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
+    //     backRight.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
+    // }
 }

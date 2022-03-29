@@ -26,7 +26,6 @@ public class ClimberHigh extends SubsystemBase {
     climberHighMotor1.setNeutralMode(NeutralMode.Brake);
     climberHighMotor2 = new TalonFX(CLIMBERHIGH2_CAN_ID);
     climberHighMotor2.setNeutralMode(NeutralMode.Brake);
-
     
   }
 
@@ -36,9 +35,11 @@ public class ClimberHigh extends SubsystemBase {
   }
 
   public void climb(double speed) {
+
+    //If one climber or the other is spinning the wrong direction, change speed to - speed below
+
     climberHighMotor1.set(ControlMode.PercentOutput, speed);
     climberHighMotor2.set(ControlMode.PercentOutput, speed);
-  
   }
  
 }

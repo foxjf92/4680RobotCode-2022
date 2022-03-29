@@ -10,8 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.AutoSwerveJoystickCmd;
 import frc.robot.commands.DoNothing;
-import frc.robot.commands.DriveXY;
 import frc.robot.commands.ShootAndDrive;
 
 /**
@@ -36,15 +36,10 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
       
+    chooser.setDefaultOption("Shoot and Drive", new ShootAndDrive(RobotContainer.swerveDrive, RobotContainer.feeder, RobotContainer.shooter));
+    chooser.addOption("Drive", new AutoSwerveJoystickCmd(RobotContainer.swerveDrive, 0.5, 0.0, 0.0, false).withTimeout(5));
     chooser.addOption("Do Nothing", new DoNothing());
-    chooser.addOption("Forward 10", new DriveXY(10, 0, 0, 0.2));
-    chooser.addOption("Forward 25", new DriveXY(25, 0, 0, 0.2));
-    chooser.addOption("Forward 50", new DriveXY(50, 0, 0, 0.2));
-    chooser.addOption("Shoot and Drive", new ShootAndDrive(RobotContainer.swerveDrive, RobotContainer.feeder, RobotContainer.shooter));
-    chooser.setDefaultOption("Forward 100", new DriveXY(100, 0, 0, 0.2));
-    chooser.addOption("Left 100", new DriveXY(0, 100, 0, 0.2));
-    // chooser.addOption("Turn +45", new TurnToAngle(45));
-    // chooser.addOption("Turn -90", new TurnToAngle(-90));
+    
     
     SmartDashboard.putData("Auto mode", chooser);
 

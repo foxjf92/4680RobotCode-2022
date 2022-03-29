@@ -22,8 +22,6 @@ public class Climber extends SubsystemBase {
   public Climber() {
     climberMotor = new TalonFX(CLIMBER_CAN_ID);
     climberMotor.setNeutralMode(NeutralMode.Brake);
-
-    //setDefaultCommand(new ClimbCommand());
   }
 
   @Override

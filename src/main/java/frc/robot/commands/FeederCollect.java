@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Feeder;
 
 public class FeederCollect extends CommandBase {
@@ -33,14 +32,6 @@ public class FeederCollect extends CommandBase {
   public void execute() {
     
     m_feeder.feed(m_feedSpeed);
-
-    // if(RobotContainer.shooterController.getAButtonPressed()){
-    //   m_feeder.feed(m_feedSpeed);
-    // }
-
-    //System.out.print("Executing FeederCollect");
-    // //Remove after DI logic is sorted
-    // m_feeder.feed(m_feedSpeed);
    
   }
   
@@ -56,16 +47,9 @@ public class FeederCollect extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if(RobotContainer.shooterController.getAButtonReleased() || m_feeder.ballStatus()){
-    //   return true;
-    // }
-    // else{
-    //   return false;
-    // }
     if(m_feeder.ballStatus()){
       return true;
     }
-
     return false;
   }
 
