@@ -26,9 +26,9 @@ public class ShootAndDrive extends SequentialCommandGroup {
     m_shooter = shooter;
     m_feeder = feeder;
     
-    addCommands(new SetShooterSpeed(m_shooter, ManualShooterSpeed.NEAR_SETPOINT));
-    addCommands(new ShootBall(m_feeder));
+    addCommands(new SetShooterSpeed(m_shooter, ManualShooterSpeed.FAR_SETPOINT));
+    addCommands(new ShootBall(m_feeder).withTimeout(1));
     addCommands(new SetShooterSpeed(m_shooter, 0.0));
-    addCommands(new AutoSwerveJoystickCmd(m_swerveDrive, 0.5, 0.0, 0.0, false).withTimeout(5));
+    addCommands(new AutoSwerveJoystickCmd(m_swerveDrive, 0.5, 0.0, 0.0, false).withTimeout(2));
   }
 }

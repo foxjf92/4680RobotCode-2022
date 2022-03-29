@@ -105,7 +105,7 @@ public final class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final double kIntakeCollectSpeed = 0.5;
+        public static final double kIntakeCollectSpeed = 0.4;
     }
 
     public static final class ShooterConstants {

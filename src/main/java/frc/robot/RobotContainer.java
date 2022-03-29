@@ -38,6 +38,7 @@ import frc.robot.commands.IntakePosition;
 import frc.robot.commands.ManualShooterSpeed;
 import frc.robot.commands.ShootAndDrive;
 import frc.robot.commands.SwerveJoystickCmd;
+import frc.robot.commands.ZeroHeading;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ClimberHigh;
 import frc.robot.subsystems.Feeder;
@@ -72,6 +73,7 @@ public class RobotContainer {
   private final Command m_intakePosition = new IntakePosition();
   //private final Command m_manualShootCommand = new ManualShootCommand();
   private final Command m_manualShooterSpeed = new ManualShooterSpeed();
+  private final Command m_zeroHeading = new ZeroHeading();
   
   //Command Groups
   //private final ParallelCommandGroup m_collect = new Collect(intake, intakeSpeed, feeder, feederSpeed);
@@ -120,6 +122,8 @@ public class RobotContainer {
     //Driver Controls
     //Only binding commands for subsytems that need to change from non-default command, i.e. Operator Controls for now
 
+    new JoystickButton(driveController, XboxController.Button.kLeftBumper.value).whenPressed(m_zeroHeading);
+
     //Operator Controls
     //Extend Intake
     new JoystickButton(shooterController, XboxController.Button.kY.value).whileHeld(m_intakePosition);
@@ -129,7 +133,7 @@ public class RobotContainer {
     
     
     new JoystickButton(shooterController, XboxController.Button.kA.value)
-      .whenHeld(new FeederCollect(feeder, 0.5)
+      .whenHeld(new FeederCollect(feeder, 0.75)
       .alongWith(new IntakeCollect(intake, Constants.IntakeConstants.kIntakeCollectSpeed))
       );
      

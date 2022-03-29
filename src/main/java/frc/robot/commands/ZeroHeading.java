@@ -7,39 +7,34 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Intake;
 
-public class IntakeHoldRetracted extends CommandBase {
-  
-  private static final double SPEED = 0.07;
-  private final Intake m_intake;
+public class ZeroHeading extends CommandBase {
+  private static final double CLIMB_SPEED = 1.0;
+
   /**
-   * Creates a new Collect command.
+   * Creates a new ClimbCommand.
    */
-  
-   public IntakeHoldRetracted(Intake intake) {
+  public ZeroHeading() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_intake = intake;
-    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    RobotContainer.intake.setExtenderCurrentLimit(15);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.intake.retract(SPEED);
+    RobotContainer.swerveDrive.zeroHeading();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-      return false;
+    return true;
   }
 }

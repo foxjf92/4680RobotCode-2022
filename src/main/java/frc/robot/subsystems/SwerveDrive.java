@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.Pigeon2;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -60,16 +61,18 @@ public class SwerveDrive extends SubsystemBase {
     private static final double kPgain = 0.040;
     private static final double kDgain = 0.0;
 
-    // Adding in old functionality for auton
     private static SwerveDriveKinematics kinematics;
 
-    // Remove above maybe
 
-    private final AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    //private final AHRS gyro = new AHRS(I2C.Port.kOnboard);
+    Pigeon2 m_imu;
+
     private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(DriveConstants.kDriveKinematics,
             new Rotation2d(0));
 
     public SwerveDrive() {
+
+        m_imu = new Pigeon2(17);
 
         kinematics = new SwerveDriveKinematics(
                 new Translation2d(DriveConstants.kTrackWidth / 2.0, DriveConstants.kWheelBase / 2.0),
@@ -87,11 +90,13 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public void zeroHeading() {
-        gyro.reset();
+        //gyro.reset();
+        m_imu.setYaw(0);
     }
 
     public double getHeading() {
-        return Math.IEEEremainder(gyro.getAngle(), 360);
+        return m_imu.getYaw();
+        //return Math.IEEEremainder(m_imu.getYaw(), 360);
     }
 
     public Rotation2d getRotation2d() {
@@ -132,49 +137,4 @@ public class SwerveDrive extends SubsystemBase {
         backRight.setDesiredState(desiredStates[3]);
     }
 
-
-    // //Below is taken from Old Code to get auton working hopefully
-    // public void driveHeading(Translation2d translation, double heading) {
-
-    //     double angle = getAngle();
-    //     double currentAngularRate = getAngularRate();
-    //     double angle_error = angleDelta(heading, angle);
-    //     double yawCommand = -angle_error * kPgain - (currentAngularRate) * kDgain;
-
-    //     drive(translation, yawCommand, true);
-    // }
-
-    // static public double angleDelta(double src, double dest) {
-    //     double delta = (dest - src) % 360.0;
-    //     if (Math.abs(delta) > 180) {
-    //         delta = delta - (Math.signum(delta) * 360);
-    //     }
-    //     return delta;
-    // }
-
-    // public double getAngle() {
-    //     return -gyro.getAngle();
-    // }
-
-    // public double getAngularRate() {
-    //     return -gyro.getRate();
-    // }
-
-    // public void drive(Translation2d translation, double rotation, boolean fieldOriented) {
-    //     rotation *= 2.0 / Math.hypot(Constants.DriveConstants.kWheelBase, Constants.DriveConstants.kTrackWidth);
-    //     ChassisSpeeds speeds;
-    //     if (fieldOriented) {
-    //         speeds = ChassisSpeeds.fromFieldRelativeSpeeds(translation.getX(), translation.getY(), rotation,
-    //                 Rotation2d.fromDegrees(getAngle()));
-    //     } else {
-    //         speeds = new ChassisSpeeds(translation.getX(), translation.getY(), rotation);
-    //     }
-    //     // setModuleStates(SwerveModuleState[] speeds);
-    //     //FIXME Need to sort out to drive in Auton I think
-    //     SwerveModuleState[] states = kinematics.toSwerveModuleStates(speeds);
-    //     frontLeft.setTargetVelocity(states[0].speedMetersPerSecond, states[0].angle.getRadians());
-    //     frontRight.setTargetVelocity(states[1].speedMetersPerSecond, states[1].angle.getRadians());
-    //     backLeft.setTargetVelocity(states[2].speedMetersPerSecond, states[2].angle.getRadians());
-    //     backRight.setTargetVelocity(states[3].speedMetersPerSecond, states[3].angle.getRadians());
-    // }
 }
