@@ -90,13 +90,11 @@ public class SwerveDrive extends SubsystemBase {
     }
 
     public void zeroHeading() {
-        //gyro.reset();
         m_imu.setYaw(0);
     }
 
     public double getHeading() {
-        return m_imu.getYaw();
-        //return Math.IEEEremainder(m_imu.getYaw(), 360);
+        return -Math.IEEEremainder(m_imu.getYaw(), 360);
     }
 
     public Rotation2d getRotation2d() {
